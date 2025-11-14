@@ -148,8 +148,8 @@ const ScratchToReveal = ({ children }) => {
             transition={{ duration: 0.5 }}
             // Removed inline styles for mask, now handled in CSS
           >
-            <span className="scratch-text">[REDACTED]</span>
-            <span className="scratch-subtext">// Click and drag to decrypt</span>
+            <span className="scratch-text">[SCRATCH]</span>
+            <span className="scratch-subtext">Click and drag to decrypt</span>
           </motion.div>
         )}
       </AnimatePresence>
