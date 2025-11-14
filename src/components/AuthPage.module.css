@@ -1,0 +1,215 @@
+/* src/components/AuthPage.module.css */
+
+:root {
+  --color-primary: #00ff41; /* Matrix Green */
+  --color-bg: #0a0a0a;
+  --color-text: #e0e0e0;
+  --color-text-dark: #555;
+  --color-border: #222;
+  --color-error: #ff4d4d;
+  --font-mono: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+}
+
+/* --- LAG-FREE ANIMATED BACKGROUND --- */
+.authContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  font-family: var(--font-mono);
+  padding: 2rem;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  
+  /* This is the new, lag-free CSS-only background */
+  background-color: var(--color-bg);
+  background-image: 
+    linear-gradient(to right, rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* --- This is the "Dialogue Box" --- */
+.authPanel {
+  width: 100%;
+  max-width: 440px;
+  background-color: rgba(10, 10, 10, 0.85);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+}
+
+/* --- Toggle Tabs --- */
+.authToggle {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.toggleButton {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+.toggleButton:hover {
+  color: var(--color-text);
+}
+.toggleButton.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* --- Form --- */
+.authForm {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputLabel {
+  font-size: 0.8rem;
+  color: var(--color-text-dark);
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.authInput {
+  background: #000;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: 0.75rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.authInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+/* --- New Fields Container --- */
+.extraFields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-top: 1px dashed var(--color-border);
+  padding-top: 1.5rem;
+}
+
+/* --- Button --- */
+.authButton {
+  font-family: var(--font-mono);
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid var(--color-primary);
+  background-color: transparent;
+  color: var(--color-primary);
+  font-size: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+.authButton:hover {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+}
+.authButton:disabled {
+  color: var(--color-text-dark);
+  border-color: var(--color-border);
+  background: transparent;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* --- Error Message --- */
+.errorMessage {
+  color: var(--color-error);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.75rem;
+  border: 1px solid var(--color-error);
+  background-color: rgba(255, 77, 77, 0.1);
+  text-align: center;
+}
+
+/* --- Divider --- */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--color-text-dark);
+  padding: 0 2rem;
+  margin-top: 1rem;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--color-border);
+}
+.dividerText {
+  padding: 0 1rem;
+  font-size: 0.8rem;
+}
+
+/* --- Google Button --- */
+.googleButtonWrapper {
+  padding: 0 2rem 2rem 2rem; /* Add padding to match the form */
+}
+.googleButton {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  cursor: pointer;
+  display: block; /* Make it full width */
+  width: 100%;
+  border: 1px solid var(--color-text-dark);
+  background-color: transparent;
+  color: var(--color-text);
+  font-size: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+.googleButton:hover {
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  border-color: var(--color-text);
+}
+.googleButton:disabled {
+  color: var(--color-text-dark);
+  border-color: var(--color-border);
+  background: transparent;
+  cursor: not-allowed;
+}
+
+/* --- Animated System Status Widget --- */
+.systemStatusWidget {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 0.8rem;
+  color: var(--color-text-dark);
+  z-index: 100;
+  max-width: 300px;
+}
