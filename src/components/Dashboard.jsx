@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Dashboard.css';
 import { supabase } from '../supabaseClient'; // <-- IMPORT SUPABASE
-import NodePuzzler from './NodePuzzler';
+import SecureFacilityGame from './SecureFacilityGame';
 
 // --- ICONS (INLINE) ---
 const LockIcon = () => (
@@ -54,6 +54,7 @@ const SecretVaultModal = ({ show, onClose, user }) => {
   const [error, setError] = useState("");
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
   const [selectedFile, setSelectedFile] = useState(null);
+  const [lockAnimated, setLockAnimated] = useState(false);
 
   // 1. Get files from Supabase Storage
   const getFiles = useCallback(async () => {
@@ -106,8 +107,10 @@ const SecretVaultModal = ({ show, onClose, user }) => {
       
       if (error) throw error;
       
-      // Success! Refresh the list
+      // Success! Refresh the list and animate lock icon
       setFileToUpload(null);
+      setLockAnimated(true);
+      setTimeout(() => setLockAnimated(false), 600); // Reset after animation
       getFiles();
 
     } catch (err) {
@@ -220,6 +223,9 @@ const SecretVaultModal = ({ show, onClose, user }) => {
           <div className="vault-header-left">
             <FolderIcon />
             <h2 className="vault-title">My Vault</h2>
+            <span className={lockAnimated ? 'lock-icon-saved' : ''} style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '0.75rem' }}>
+              <LockIcon />
+            </span>
             <span className="vault-file-count">({files.length} files)</span>
           </div>
           <div className="vault-header-right">
@@ -428,7 +434,8 @@ const PasskeyModal = ({ show, onClose, onSuccess, onDecoy, user }) => {
 // --- DECOY ARTICLE PAGE (Migrated) ---
 export default function Dashboard({ session }) { // <-- Receives session from App.jsx
   const [showVault, setShowVault] = useState(false); 
-  const [showPasskeyModal, setShowPasskeyModal] = useState(false); 
+  const [showPasskeyModal, setShowPasskeyModal] = useState(false);
+  const [showDecoyArticle, setShowDecoyArticle] = useState(false);
   const navigate = useNavigate();
   const user = session.user; // Get user from session
 
@@ -468,6 +475,7 @@ export default function Dashboard({ session }) { // <-- Receives session from Ap
   const handleDecoyUnlock = () => {
     console.log("DECOY PASSKEY ENTERED. FAKE VAULT ACTIVATED.");
     setShowPasskeyModal(false);
+    setShowDecoyArticle(true);
   };
 
   return (
@@ -483,7 +491,8 @@ export default function Dashboard({ session }) { // <-- Receives session from Ap
         show={showPasskeyModal}
         onClose={() => setShowPasskeyModal(false)}
         onSuccess={() => { 
-          setShowPasskeyModal(false); 
+          setShowPasskeyModal(false);
+          setShowDecoyArticle(false); // Close decoy if open
           setShowVault(true); 
         }}
         onDecoy={handleDecoyUnlock} 
@@ -508,45 +517,97 @@ export default function Dashboard({ session }) { // <-- Receives session from Ap
         </nav>
       </header>
 
-      {/* Decoy Article */}
-      <main className="container article-main">
-        <motion.div 
-          className="article-content"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          <h1>The Digital Frontier: Securing Modern Infrastructures</h1>
-          <p className="article-meta">
-            By Dr. Aris Thorne | Published: Nov 10, 2025 | Topic: Cybersecurity
-          </p>
-          <p>
-            In an era of unprecedented digital connectivity, the security of our core infrastructures
-            has become the paramount concern...
-          </p>
-          <blockquote>
-            "The digital age demands a digital shield. We are building that shield."
-          </blockquote>
-          
-          <NodePuzzler />
-          
-          <p>
-            The challenge lies not only in defense but in resilience...
-          </p>
-          <p>
-            The <strong 
-              className="secret-trigger"
-              onClick={() => setShowPasskeyModal(true)}
-            >
-              AEGIS
-            </strong> protocol represents the vanguard of this new approach...
-          </p>
-          <p>
-            Implementing such a system is not without its hurdles...
-          </p>
+      {/* Decoy Article or Real Article */}
+      {showDecoyArticle ? (
+        <main className="container article-main">
+          <motion.div 
+            className="article-content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h1>Personal Notes: Project Phoenix</h1>
+            <p className="article-meta">
+              Private Entry | Last Updated: Nov 15, 2025 | Classification: Personal
+            </p>
+            <p>
+              I've been working on this project in secret for months now. The breakthrough came 
+              when I discovered the encryption pattern in the old system. No one else knows about 
+              this yet, and I need to keep it that way.
+            </p>
+            <blockquote>
+              "The key is in the sequence. 7-3-9-1-4. Remember this."
+            </blockquote>
+            <p>
+              The meeting with the contact went well. They confirmed the location: coordinates 
+              40.7128° N, 74.0060° W. The drop point is secure, but I'm worried about surveillance. 
+              I'll need to be more careful.
+            </p>
+            <p>
+              The funds have been transferred to the offshore account. Account number: 
+              <strong className="secret-trigger"> ****-****-****-4521</strong>. 
+              Password hint: "Where we first met" - they'll know what this means.
+            </p>
+            <p>
+              I've hidden the documents in the usual place. If you're reading this, you know 
+              where to look. The combination hasn't changed: left-right-left-right, then the date 
+              we agreed on.
+            </p>
+            <p>
+              Need to remember: The backup location is still secure. No one suspects anything yet. 
+              I'll update this when I have more information.
+            </p>
+            <p style={{ marginTop: '2rem', textAlign: 'center' }}>
+              <strong 
+                className="secret-trigger"
+                onClick={() => setShowPasskeyModal(true)}
+                style={{ cursor: 'pointer', fontSize: '0.9rem', opacity: 0.7 }}
+              >
+                [Return to Main Article]
+              </strong>
+            </p>
+          </motion.div>
+        </main>
+      ) : (
+        <main className="container article-main">
+          <motion.div 
+            className="article-content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h1>The Digital Frontier: Securing Modern Infrastructures</h1>
+            <p className="article-meta">
+              By Dr. Aris Thorne | Published: Nov 10, 2025 | Topic: Cybersecurity
+            </p>
+            <p>
+              In an era of unprecedented digital connectivity, the security of our core infrastructures
+              has become the paramount concern...
+            </p>
+            <blockquote>
+              "The digital age demands a digital shield. We are building that shield."
+            </blockquote>
+            
+            <SecureFacilityGame />
+            
+            <p>
+              The challenge lies not only in defense but in resilience...
+            </p>
+            <p>
+              The <strong 
+                className="secret-trigger"
+                onClick={() => setShowPasskeyModal(true)}
+              >
+                AEGIS
+              </strong> protocol represents the vanguard of this new approach...
+            </p>
+            <p>
+              Implementing such a system is not without its hurdles...
+            </p>
 
-        </motion.div>
-      </main>
+          </motion.div>
+        </main>
+      )}
     </div>
   );
 }

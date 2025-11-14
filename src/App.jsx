@@ -19,10 +19,34 @@ const ProtectedRoute = ({ isLoggedIn, children }) => {
   return children;
 };
 
-// --- A simple loading screen (Unchanged) ---
+// --- Enhanced Classified Loading Screen ---
 const LoadingScreen = () => (
-  <div className="dashboardContainer loadingScreen">
-    <h1 className="title">[CHECKING CREDENTIALS...]</h1>
+  <div className="loading-screen">
+    <div className="loading-content">
+      <div className="loading-header">
+        <div className="classified-badge">CLASSIFIED</div>
+        <h1 className="loading-title">
+          <span className="loading-prefix">[</span>
+          CHECKING CREDENTIALS
+          <span className="loading-suffix">]</span>
+        </h1>
+      </div>
+      <div className="loading-progress">
+        <div className="progress-bar">
+          <div className="progress-fill"></div>
+        </div>
+        <div className="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div className="loading-status">
+        <span className="status-line">// VERIFYING_IDENTITY</span>
+        <span className="status-line">// ESTABLISHING_SECURE_CONNECTION</span>
+        <span className="status-line">// LOADING_SYSTEM_MODULES</span>
+      </div>
+    </div>
   </div>
 );
 

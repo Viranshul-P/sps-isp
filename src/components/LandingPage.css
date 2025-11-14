@@ -1,129 +1,218 @@
-/* --- 1. Root & Base Styles --- */
-:root {
-  --color-primary: #00ff41; /* Matrix Green */
-  --color-bg: #0a0a0a;
-  --color-text: #e0e0e0;
-  --color-text-dark: #555;
-  --color-border: #222;
-  --font-mono: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
-}
-
-body, html {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-mono);
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
+/* --- Enhanced Government Project Landing Page Styles --- */
 
 .page-container {
   width: 100%;
   min-height: 100vh;
+  position: relative;
 }
 
 .container {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
   box-sizing: border-box;
 }
 
-/* --- 2. 3D Canvas Layering (NEW) --- */
-
+/* --- 3D Canvas Layering --- */
 .data-verse-container {
-  position: fixed; /* Fix it to the viewport */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1; /* Place it in the background */
-  background-color: var(--color-bg);
+  z-index: 1;
+  background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
 }
 
 .landing-foreground {
-  position: relative; /* Make it stack on top */
-  z-index: 10; /* Place it in the foreground */
-  background: transparent; /* Make it see-through */
+  position: relative;
+  z-index: 10;
+  background: transparent;
   width: 100%;
+  min-height: 100vh;
 }
 
-/* --- 3. Header (MODIFIED) --- */
+/* --- Enhanced Header with Holographic Effect --- */
 .header {
-  position: sticky; /* Floats on top */
+  position: sticky;
   top: 0;
   z-index: 100;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  /* Blurred background effect */
-  background-color: rgba(10, 10, 10, 0.8);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  padding: 1.5rem 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(10, 10, 15, 0.9) 50%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
   border-bottom: 1px solid var(--color-border);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(0, 255, 136, 0.1);
 }
 
 .header-title {
-  font-size: 1.25rem;
-  font-weight: 400;
+  font-size: 1.5rem;
+  font-weight: 700;
   margin: 0;
   color: var(--color-primary);
+  font-family: var(--font-tech);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 
+    0 0 10px var(--color-primary-glow),
+    0 0 20px var(--color-primary-glow),
+    0 0 30px var(--color-primary-glow);
+  animation: glitch-text 3s infinite;
+  position: relative;
 }
 
-/* --- 4. Typewriter --- */
+.header-title::before {
+  content: '█';
+  color: var(--color-primary);
+  margin-right: 0.5rem;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* --- Enhanced Typewriter --- */
 .type-cursor {
   color: var(--color-primary);
-  animation: blink 1s step-end infinite;
+  font-weight: 700;
+  animation: cursor-blink 1s step-end infinite;
+  text-shadow: 0 0 10px var(--color-primary-glow);
 }
-@keyframes blink {
-  from, to { opacity: 1; }
-  50% { opacity: 0; }
-}
+
 .inline {
   display: inline;
 }
 
-
-/* --- 5. Hero Section --- */
+/* --- Hero Section with Terminal Aesthetic --- */
 .hero-section {
-  padding-top: 8vh;
-  padding-bottom: 8vh;
-  min-height: 80vh; /* Give it space */
+  padding: 10vh 0 15vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, transparent 0%, rgba(0, 255, 136, 0.05) 50%, transparent 100%),
+    radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+  animation: holographic 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .hero-title {
-  font-size: 2.5rem;
-  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
   color: var(--color-primary);
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.5rem 0;
+  font-family: var(--font-tech);
+  letter-spacing: 2px;
+  line-height: 1.2;
+  text-shadow: 
+    0 0 10px var(--color-primary-glow),
+    0 0 20px var(--color-primary-glow),
+    0 0 40px var(--color-primary-glow);
+  position: relative;
+  animation: fadeInUp 1s ease-out;
+}
+
+.hero-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), transparent);
+  box-shadow: 0 0 10px var(--color-primary-glow);
+  animation: expandLine 2s ease-out;
+}
+
+@keyframes expandLine {
+  0% { width: 0; }
+  100% { width: 100px; }
 }
 
 .hero-subtitle {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  max-width: 600px;
-  margin: 0 0 2.5rem 0;
-  color: var(--color-text);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 0 3rem 0;
+  color: var(--color-text-dim);
+  opacity: 0.9;
+  animation: fadeInUp 1s ease-out 0.3s both;
+  text-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .scratch-button-wrapper {
   margin-bottom: 4rem;
+  animation: fadeInUp 1s ease-out 0.6s both;
 }
 
-/* --- 6. Scratch Button --- */
+/* --- Enhanced Scratch Button with Holographic Effect --- */
 .scratch-container {
   position: relative;
   display: inline-block;
   cursor: crosshair;
-  border: 1px solid var(--color-border);
-  transition: border-color 0.3s ease;
+  border: 2px solid var(--color-border);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.scratch-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(0, 255, 136, 0.1) 50%,
+    transparent 70%
+  );
+  animation: shimmer 3s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 .scratch-container:hover {
-  border-color: var(--color-text);
+  border-color: var(--color-primary);
+  box-shadow: 
+    0 0 20px var(--color-primary-glow),
+    inset 0 0 20px rgba(0, 255, 136, 0.1);
+  transform: translateY(-2px);
 }
 
 .scratch-overlay {
@@ -132,20 +221,24 @@ body, html {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--color-primary);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 100%
+  );
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   user-select: none;
-  clip-path: inset(0 0 0 0); /* This is required for the mask to work */
+  clip-path: inset(0 0 0 0);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
-/* This is the magic part for scratching */
 .scratch-overlay[style*="radial-gradient"] {
   -webkit-mask-image: var(--webkit-mask-image);
   -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: 4000px 4000px; /* Large size to cover */
+  -webkit-mask-size: 4000px 4000px;
   -webkit-mask-composite: destination-out;
   mask-image: var(--webkit-mask-image);
   mask-repeat: no-repeat;
@@ -153,35 +246,40 @@ body, html {
   mask-composite: exclude;
 }
 
-
 .scratch-text {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-bg);
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #000;
   pointer-events: none;
+  font-family: var(--font-tech);
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .scratch-subtext {
-  font-size: 0.8rem;
-  color: var(--color-bg);
-  opacity: 0.7;
+  font-size: 0.9rem;
+  color: #000;
+  opacity: 0.8;
   pointer-events: none;
-  margin-top: 4px;
+  margin-top: 8px;
+  font-weight: 500;
 }
 
 .scratch-content {
   transition: opacity 0.5s ease;
 }
+
 .scratch-content.hidden {
   opacity: 0.1;
   visibility: hidden;
 }
+
 .scratch-content.visible {
   opacity: 1;
   visibility: visible;
 }
 
-/* Themed Button */
+/* --- Enhanced Button Styles --- */
 .btn {
   font-family: var(--font-mono);
   text-decoration: none;
@@ -190,98 +288,208 @@ body, html {
   display: inline-block;
   border: none;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
+
 .btn-primary {
-  background-color: transparent;
+  background: linear-gradient(135deg, transparent 0%, rgba(0, 255, 136, 0.1) 100%);
   color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  border: 2px solid var(--color-primary);
+  box-shadow: 
+    0 0 20px var(--color-primary-glow),
+    inset 0 0 20px rgba(0, 255, 136, 0.1);
 }
+
 .btn-primary:hover {
-  background-color: var(--color-primary);
-  color: var(--color-bg);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: #000;
+  box-shadow: 
+    0 0 30px var(--color-primary-glow),
+    0 0 50px var(--color-primary-glow),
+    inset 0 0 30px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
 }
+
 .btn-large {
   font-size: 1.5rem;
-  padding: 1rem 2.5rem;
+  padding: 1.25rem 3rem;
 }
 
-
-/* --- 7. Scroll Indicator --- */
+/* --- Enhanced Scroll Indicator --- */
 .scroll-indicator {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 3rem;
   color: var(--color-text-dark);
+  animation: fadeInUp 1s ease-out 0.9s both, float 3s ease-in-out infinite;
 }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
 .scroll-text {
-  font-size: 0.8rem;
-  letter-spacing: 1px;
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.6;
 }
+
 .scroll-arrow {
   width: 1.5rem;
   height: 1.5rem;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+  opacity: 0.5;
+  filter: drop-shadow(0 0 5px var(--color-primary-glow));
 }
 
-
-/* --- 8. Features Section --- */
+/* --- Enhanced Features Grid --- */
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 10vh 0;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  padding: 15vh 0;
 }
 
 .feature-card {
   border: 1px solid var(--color-border);
-  padding: 2rem;
-  background-color: rgba(10, 10, 10, 0.5); /* Slight bg */
-  transition: border-color 0.3s ease;
-}
-.feature-card:hover {
-  border-color: var(--color-primary);
-}
-.feature-card h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 1px;
-}
-.feature-card p {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--color-text);
-  opacity: 0.8;
-  margin: 0;
-}
-.icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  color: var(--color-primary);
+  padding: 2.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(10, 10, 15, 0.6) 100%
+  );
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* --- 9. Overview Section --- */
-.overview-section {
-  padding: 10vh 0;
-  max-width: 800px;
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 136, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
 }
-.overview-title {
-  font-size: 1.5rem;
-  font-weight: 400;
+
+.feature-card:hover::before {
+  left: 100%;
+}
+
+.feature-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 
+    0 0 30px var(--color-primary-glow),
+    inset 0 0 30px rgba(0, 255, 136, 0.05);
+  transform: translateY(-5px);
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
   color: var(--color-primary);
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  font-family: var(--font-tech);
+  text-transform: uppercase;
+  text-shadow: 0 0 10px var(--color-primary-glow);
 }
-.overview-text {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: var(--color-text);
+
+.feature-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-text-dim);
   opacity: 0.9;
-  margin-bottom: 1.5rem;
+  margin: 0;
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-primary);
+  filter: drop-shadow(0 0 10px var(--color-primary-glow));
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .icon {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 20px var(--color-primary-glow));
+}
+
+/* --- Enhanced Overview Section --- */
+.overview-section {
+  padding: 15vh 0;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.overview-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--color-primary),
+    transparent
+  );
+  opacity: 0.3;
+}
+
+.overview-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 1.5rem;
+  margin-bottom: 3rem;
+  font-family: var(--font-tech);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px var(--color-primary-glow);
+  position: relative;
+}
+
+.overview-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 150px;
+  height: 2px;
+  background: var(--color-primary);
+  box-shadow: 0 0 10px var(--color-primary-glow);
+}
+
+.overview-text {
+  font-size: 1.1rem;
+  line-height: 2;
+  color: var(--color-text-dim);
+  opacity: 0.85;
+  margin-bottom: 2rem;
+  text-align: justify;
+  text-shadow: 0 0 5px rgba(0, 255, 136, 0.2);
 }
 
 .loadingScreen {
@@ -289,4 +497,26 @@ body, html {
   align-items: center;
   justify-content: center;
   text-align: center;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .feature-card {
+    padding: 2rem;
+  }
+  
+  .overview-section {
+    padding: 10vh 0;
+  }
 }

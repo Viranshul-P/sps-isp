@@ -134,7 +134,7 @@ export default function AuthPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className={styles.authToggle}>
+        <div className={styles.authToggle} data-active={isLogin ? 'left' : 'right'}>
           <button
             className={`${styles.toggleButton} ${isLogin ? styles.active : ''}`}
             onClick={() => setIsLogin(true)}

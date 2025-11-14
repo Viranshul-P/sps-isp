@@ -74,16 +74,18 @@ const TypewriterOnScroll = ({ text, delay = 0 }) => {
 };
 
 
-// --- 3. Scratch-to-Reveal Component (Unchanged) ---
+// --- 3. Scratch-to-Reveal Component (Enhanced with Mobile Support) ---
 const ScratchToReveal = ({ children }) => {
   const [revealedPixels, setRevealedPixels] = useState(new Set());
   const [isScratching, setIsScratching] = useState(false);
+  const longPressTimerRef = useRef(null);
   const containerRef = useRef(null);
   const overlayRef = useRef(null);
   const revealThreshold = 0.4; 
 
   const getPixelKey = (x, y) => `${Math.floor(x / 10)}-${Math.floor(y / 10)}`;
 
+  // Mouse handlers (desktop)
   const handleMouseDown = useCallback((e) => {
     e.preventDefault();
     setIsScratching(true);
@@ -114,10 +116,72 @@ const ScratchToReveal = ({ children }) => {
     setIsScratching(false);
   }, []);
 
+  // Touch handlers (mobile)
+  const handleTouchStart = useCallback((e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      
+      // Start long press timer (3 seconds)
+      longPressTimerRef.current = setTimeout(() => {
+        // Reveal all pixels on long press
+        if (containerRef.current) {
+          const rect = containerRef.current.getBoundingClientRect();
+          const totalPixelsX = Math.floor(rect.width / 10);
+          const totalPixelsY = Math.floor(rect.height / 10);
+          const allPixels = new Set();
+          
+          for (let i = 0; i < totalPixelsX; i++) {
+            for (let j = 0; j < totalPixelsY; j++) {
+              allPixels.add(`${i}-${j}`);
+            }
+          }
+          setRevealedPixels(allPixels);
+          setIsScratching(false);
+        }
+      }, 3000);
+      
+      setIsScratching(true);
+      setRevealedPixels(prev => new Set(prev).add(getPixelKey(x, y)));
+    }
+  }, []);
+
+  const handleTouchMove = useCallback((e) => {
+    e.preventDefault();
+    if (!isScratching || !containerRef.current) return;
+    const touch = e.touches[0];
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    const newPixels = new Set(revealedPixels);
+    for (let i = -10; i <= 10; i += 5) {
+      for (let j = -10; j <= 10; j += 5) {
+        newPixels.add(getPixelKey(x + i, y + j));
+      }
+    }
+    setRevealedPixels(newPixels);
+  }, [isScratching, revealedPixels]);
+
+  const handleTouchEnd = useCallback((e) => {
+    e.preventDefault();
+    setIsScratching(false);
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+  }, []);
+
   useEffect(() => {
     document.addEventListener('mouseup', handleMouseUp);
     return () => {
       document.removeEventListener('mouseup', handleMouseUp);
+      if (longPressTimerRef.current) {
+        clearTimeout(longPressTimerRef.current);
+      }
     };
   }, [handleMouseUp]);
 
@@ -131,13 +195,15 @@ const ScratchToReveal = ({ children }) => {
 
   const isFullyRevealed = revealedPixels.size / totalPixels.current > revealThreshold;
 
-
   return (
     <div 
       ref={containerRef}
       className="scratch-container"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <AnimatePresence>
         {!isFullyRevealed && (
@@ -146,10 +212,13 @@ const ScratchToReveal = ({ children }) => {
             className="scratch-overlay"
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            // Removed inline styles for mask, now handled in CSS
           >
             <span className="scratch-text">[SCRATCH]</span>
-            <span className="scratch-subtext">Click and drag to decrypt</span>
+            <span className="scratch-subtext">
+              {window.innerWidth <= 768 
+                ? "Long press (3s) or drag to decrypt" 
+                : "Click and drag to decrypt"}
+            </span>
           </motion.div>
         )}
       </AnimatePresence>

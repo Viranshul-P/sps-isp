@@ -112,8 +112,13 @@
 }
 .authInput:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  border-color: var(--color-cyan);
+  box-shadow: 
+    0 0 15px var(--color-cyan-glow),
+    0 0 30px var(--color-cyan-glow),
+    inset 0 0 20px rgba(20, 241, 241, 0.1);
+  background: rgba(30, 37, 61, 0.9);
+  transform: translateY(-1px);
 }
 
 /* --- Button --- */
