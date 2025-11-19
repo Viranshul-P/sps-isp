@@ -213,7 +213,7 @@ const ScratchToReveal = ({ children }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="scratch-text">[REDACTED]</span>
+            <span className="scratch-text">[hello]</span>
             <span className="scratch-subtext">
               {window.innerWidth <= 768 
                 ? "Long press (3s) or drag to decrypt" 
