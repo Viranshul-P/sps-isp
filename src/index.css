@@ -1,47 +1,19 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap');
 
-/* --- CSS Variables (Midnight Blue Tech-Security Theme) --- */
+/* --- CSS Variables (Theme) --- */
 :root {
-  --font-mono: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
-  --font-tech: 'Orbitron', 'Roboto Mono', monospace;
-  
-  /* Primary Background - Midnight Blue Gradient */
-  --color-bg: #0A0F24;
-  --color-bg-secondary: #111A35;
-  --color-surface: #1E253D;
-  --color-surface-elevated: #2A3447;
-  
-  /* Text Colors */
-  --color-text: #E6E6E6;
-  --color-text-dim: #9BA3B5;
-  --color-text-dark: #6B7280;
-  --color-text-muted: #4B5563;
-  
-  /* Interactive Accent - Electric Cyan */
-  --color-primary: #14F1F1;
-  --color-primary-glow: rgba(20, 241, 241, 0.4);
-  --color-primary-dark: #0EC4C4;
-  --color-cyan: #14F1F1;
-  --color-cyan-glow: rgba(20, 241, 241, 0.5);
-  
-  /* Secondary Accent - Neon Purple */
-  --color-secondary: #8A2BE2;
-  --color-secondary-glow: rgba(138, 43, 226, 0.4);
-  --color-purple: #8A2BE2;
-  --color-purple-glow: rgba(138, 43, 226, 0.3);
-  
-  /* Status Colors */
-  --color-red: #ff3366;
-  --color-red-glow: rgba(255, 51, 102, 0.4);
-  --color-red-dark: #cc0033;
-  --color-warning: #ffaa00;
-  --color-warning-glow: rgba(255, 170, 0, 0.3);
-  
-  /* Border & Effects */
-  --color-border: rgba(20, 241, 241, 0.2);
-  --color-border-bright: rgba(20, 241, 241, 0.5);
-  --glow-intensity: 0.6;
+  --font-mono: 'Roboto Mono', monospace;
+  --color-bg: #0a0a0a;
+  --color-text: #d1d5db;
+  --color-primary: #00ffaa;
+  --color-primary-dark: #00dd99;
+  --color-secondary: #888;
+  --color-red: #f472b6;
+  --color-red-dark: #be185d;
+  --color-glow: rgba(0, 255, 255, 0.3);
+  --color-glow-dark: rgba(0, 255, 255, 0.1);
+  --color-glow-red: rgba(244, 114, 182, 0.3);
 }
 
 /* --- Global Styles --- */
@@ -51,181 +23,73 @@
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
-  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-secondary) 100%);
+  background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-mono);
   min-height: 100vh;
   overscroll-behavior: none;
-  position: relative;
-  overflow-x: hidden;
-  /* Enhanced scanline effect */
-  background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(20, 241, 241, 0.03) 2px,
-      rgba(20, 241, 241, 0.03) 4px
-    );
+  /* Ensure the body is a positioning context for pseudo-elements */
+  position: relative; 
 }
 
-/* --- Advanced Matrix/Data Stream Background --- */
+/* --- NEW: Matrix Code Background --- */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(20, 241, 241, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.05) 0%, transparent 50%),
-    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-secondary) 100%);
-  background-size: 100% 100%;
-  z-index: -2;
-  animation: backgroundPulse 20s ease-in-out infinite;
-}
-
-@keyframes backgroundPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.95; }
-}
-
-/* --- Holographic Grid Overlay --- */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(20, 241, 241, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20, 241, 241, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 30s linear infinite;
+  background-color: rgba(0, 0, 0, 0.9); /* Slightly darker base */
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Ctext x="0" y="12" font-family="monospace" font-size="16" fill="%2300AA77" opacity="0.1"%3E%26%23x30%3B%3C/text%3E%3C/svg%3E'); /* Subtle '0' characters */
+  background-size: 16px 16px;
+  animation: matrix-scroll 60s linear infinite; /* Slower, continuous scroll */
   z-index: -1;
-  pointer-events: none;
+  opacity: 0.8; /* Make it slightly transparent */
 }
 
-@keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(50px, 50px); }
+@keyframes matrix-scroll {
+  from { background-position: 0% 0%; }
+  to { background-position: 100% 100%; } /* Scroll diagonally */
 }
 
-/* --- Enhanced Scanline Effect --- */
+
+/* --- Global Scanline Effect --- */
 .scanline-overlay {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(
-    transparent 50%,
-    rgba(20, 241, 241, 0.03) 50%
-  );
-  background-size: 100% 4px;
-  animation: scanline 8s linear infinite;
-  z-index: 1000;
-  opacity: 0.5;
+  background-image: linear-gradient(rgba(0, 255, 170, 0.05) 1px, transparent 1px);
+  background-size: 1px 2px;
+  animation: scanline 10s linear infinite;
+  z-index: 100;
 }
 
 @keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
+  0% { transform: translateY(0%); }
+  100% { transform: translateY(-50%); }
 }
 
-/* --- Glitch Effect Utility --- */
-@keyframes glitch {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-}
-
-@keyframes glitch-text {
-  0%, 100% { 
-    text-shadow: 
-      0 0 5px var(--color-primary),
-      0 0 10px var(--color-primary),
-      0 0 15px var(--color-primary);
-  }
-  25% { 
-    text-shadow: 
-      -2px 0 5px var(--color-red),
-      2px 0 5px var(--color-secondary);
-  }
-  50% { 
-    text-shadow: 
-      2px 0 5px var(--color-secondary),
-      -2px 0 5px var(--color-red);
-  }
-  75% { 
-    text-shadow: 
-      -2px 0 5px var(--color-red),
-      2px 0 5px var(--color-secondary);
-  }
-}
-
-/* --- Holographic Shimmer --- */
-@keyframes holographic {
-  0% { 
-    background-position: 0% 50%;
-    filter: hue-rotate(0deg);
-  }
-  50% { 
-    background-position: 100% 50%;
-    filter: hue-rotate(90deg);
-  }
-  100% { 
-    background-position: 0% 50%;
-    filter: hue-rotate(0deg);
-  }
-}
-
-/* --- Scrollbar (Enhanced) --- */
+/* --- Scrollbar --- */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-bg);
-  border-left: 1px solid var(--color-border);
+  background: #111;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  border-radius: 5px;
-  border: 1px solid var(--color-bg);
+  background: var(--color-primary);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
-  box-shadow: 0 0 10px var(--color-primary-glow);
+  background: var(--color-primary-dark);
 }
 
 /* --- Base Link & Button Styles --- */
 a {
   color: var(--color-primary);
   text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
 }
-
 a:hover {
-  color: var(--color-primary-dark);
-  text-shadow: 0 0 10px var(--color-primary-glow);
-}
-
-a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--color-primary);
-  transition: width 0.3s ease;
-  box-shadow: 0 0 5px var(--color-primary-glow);
-}
-
-a:hover::after {
-  width: 100%;
+  text-decoration: underline;
 }
 
 button {
@@ -233,36 +97,10 @@ button {
   cursor: pointer;
   border: none;
   border-radius: 4px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.2s ease-in-out;
 }
 
-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(20, 241, 241, 0.1);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-button:hover {
-  box-shadow: 
-    0 0 15px var(--color-cyan-glow),
-    0 0 30px var(--color-cyan-glow);
-}
-
-button:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-/* --- Utility Classes --- */
+/* Base utility classes we will use on components */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -270,245 +108,4 @@ button:hover::before {
   margin-right: auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-}
-
-/* --- Glow Text Effect --- */
-.glow-text {
-  text-shadow: 
-    0 0 5px currentColor,
-    0 0 10px currentColor,
-    0 0 15px currentColor,
-    0 0 20px currentColor;
-}
-
-/* --- Terminal Cursor Blink --- */
-@keyframes cursor-blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-.terminal-cursor {
-  animation: cursor-blink 1s step-end infinite;
-}
-
-/* --- Classified Document Effect --- */
-.classified-stamp {
-  position: relative;
-}
-
-.classified-stamp::before {
-  content: 'CLASSIFIED';
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  font-size: 0.6rem;
-  color: var(--color-red);
-  transform: rotate(15deg);
-  opacity: 0.5;
-  letter-spacing: 2px;
-  font-weight: 900;
-}
-
-/* --- Enhanced Loading Screen --- */
-.loading-screen {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(
-    circle at center,
-    var(--color-bg) 0%,
-    var(--color-bg-secondary) 100%
-  );
-  z-index: 9999;
-  font-family: var(--font-mono);
-}
-
-.loading-content {
-  text-align: center;
-  padding: 3rem;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(10, 10, 15, 0.9) 100%
-  );
-  border: 2px solid var(--color-border);
-  border-radius: 0.75rem;
-  box-shadow: 
-    0 0 40px rgba(0, 255, 136, 0.2),
-    inset 0 0 40px rgba(0, 255, 136, 0.05);
-  backdrop-filter: blur(10px);
-  min-width: 400px;
-  position: relative;
-  overflow: hidden;
-}
-
-.loading-content::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(0, 255, 136, 0.1) 50%,
-    transparent 70%
-  );
-  animation: holographic 6s infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.loading-content > * {
-  position: relative;
-  z-index: 1;
-}
-
-.classified-badge {
-  position: absolute;
-  top: -15px;
-  right: 20px;
-  background: var(--color-red);
-  color: #000;
-  padding: 0.25rem 1rem;
-  font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 3px;
-  transform: rotate(15deg);
-  box-shadow: 0 0 20px var(--color-red-glow);
-  border: 2px solid #000;
-}
-
-.loading-header {
-  margin-bottom: 3rem;
-}
-
-.loading-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  font-family: var(--font-tech);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  text-shadow: 
-    0 0 10px var(--color-primary-glow),
-    0 0 20px var(--color-primary-glow),
-    0 0 30px var(--color-primary-glow);
-  animation: glitch-text 3s infinite;
-}
-
-.loading-prefix,
-.loading-suffix {
-  color: var(--color-primary);
-  animation: cursor-blink 1s step-end infinite;
-}
-
-.loading-progress {
-  margin-bottom: 2rem;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background: rgba(0, 255, 136, 0.1);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  width: 0%;
-  animation: progressLoad 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-  box-shadow: 0 0 10px var(--color-primary-glow);
-  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-@keyframes progressLoad {
-  0% { 
-    width: 0%; 
-    transform: scaleX(0);
-  }
-  50% { 
-    width: 70%; 
-    transform: scaleX(1.05);
-  }
-  100% { 
-    width: 100%; 
-    transform: scaleX(1);
-  }
-}
-
-.loading-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.loading-dots span {
-  width: 8px;
-  height: 8px;
-  background: var(--color-primary);
-  border-radius: 50%;
-  animation: dotPulse 1.4s ease-in-out infinite;
-  box-shadow: 0 0 10px var(--color-primary-glow);
-}
-
-.loading-dots span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.loading-dots span:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes dotPulse {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(0.8);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-}
-
-.loading-status {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  font-size: 0.85rem;
-  color: var(--color-text-dim);
-  text-align: left;
-  font-family: var(--font-mono);
-  letter-spacing: 1px;
-}
-
-.status-line {
-  opacity: 0;
-  animation: statusFadeIn 0.5s ease-out forwards;
-}
-
-.status-line:nth-child(1) {
-  animation-delay: 0.5s;
-}
-
-.status-line:nth-child(2) {
-  animation-delay: 1s;
-}
-
-.status-line:nth-child(3) {
-  animation-delay: 1.5s;
-}
-
-@keyframes statusFadeIn {
-  to {
-    opacity: 1;
-  }
 }

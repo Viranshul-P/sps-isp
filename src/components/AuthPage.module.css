@@ -1,5 +1,16 @@
-/* --- Enhanced Government Terminal Auth Page --- */
+/* src/components/AuthPage.module.css */
 
+:root {
+  --color-primary: #00ff41; /* Matrix Green */
+  --color-bg: #0a0a0a;
+  --color-text: #e0e0e0;
+  --color-text-dark: #555;
+  --color-border: #222;
+  --color-error: #ff4d4d;
+  --font-mono: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+}
+
+/* --- LAG-FREE ANIMATED BACKGROUND --- */
 .authContainer {
   display: flex;
   align-items: center;
@@ -11,418 +22,194 @@
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  background: var(--color-bg);
-}
-
-/* --- Terminal Grid Background --- */
-.authContainer::before {
-  content: '';
-  position: absolute;
-  inset: 0;
+  
+  /* This is the new, lag-free CSS-only background */
+  background-color: var(--color-bg);
   background-image: 
-    linear-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-  animation: gridMove 20s linear infinite;
-  z-index: 0;
-  opacity: 0.5;
+    linear-gradient(to right, rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
 }
 
-@keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(40px, 40px); }
-}
-
-/* --- Holographic Panel Effect --- */
+/* --- This is the "Dialogue Box" --- */
 .authPanel {
   width: 100%;
-  max-width: 480px;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(10, 10, 15, 0.95) 50%,
-    rgba(0, 0, 0, 0.9) 100%
-  );
-  border: 2px solid var(--color-border);
-  backdrop-filter: blur(15px) saturate(180%);
-  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  max-width: 440px;
+  background-color: rgba(10, 10, 10, 0.85);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   position: relative;
   z-index: 10;
-  box-shadow: 
-    0 0 40px rgba(0, 255, 136, 0.2),
-    inset 0 0 40px rgba(0, 255, 136, 0.05),
-    0 8px 32px rgba(0, 0, 0, 0.8);
-  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
 }
 
-.authPanel::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(0, 255, 136, 0.1) 50%,
-    transparent 70%
-  );
-  animation: holographic 6s infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.authPanel > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* --- Enhanced Toggle Tabs --- */
+/* --- Toggle Tabs --- */
 .authToggle {
   display: flex;
-  border-bottom: 2px solid var(--color-border);
-  background: rgba(0, 0, 0, 0.3);
-  position: relative;
-}
-
-.authToggle::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 50%;
-  height: 2px;
-  background: var(--color-primary);
-  transition: left 0.3s ease;
-  box-shadow: 0 0 10px var(--color-primary-glow);
-}
-
-.authToggle[data-active="right"]::after {
-  left: 50%;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .toggleButton {
   flex: 1;
   background: transparent;
   border: none;
-  padding: 1.25rem 1rem;
+  padding: 1rem;
   font-family: var(--font-mono);
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--color-text-muted);
+  color: var(--color-text-dark);
   cursor: pointer;
   transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  position: relative;
-  z-index: 1;
+  border-bottom: 2px solid transparent;
 }
-
 .toggleButton:hover {
-  color: var(--color-text-dim);
-  background: rgba(0, 255, 136, 0.05);
+  color: var(--color-text);
 }
-
 .toggleButton.active {
   color: var(--color-primary);
-  text-shadow: 0 0 10px var(--color-primary-glow);
+  border-bottom-color: var(--color-primary);
 }
 
-/* --- Enhanced Form --- */
+/* --- Form --- */
 .authForm {
   display: flex;
   flex-direction: column;
-  padding: 2.5rem;
-  gap: 2rem;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  gap: 1.5rem;
 }
 
 .inputGroup {
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 .inputLabel {
-  font-size: 0.85rem;
-  color: var(--color-text-dim);
-  margin-bottom: 0.75rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 500;
-  text-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
+  font-size: 0.8rem;
+  color: var(--color-text-dark);
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
 }
 
 .authInput {
-  background: rgba(0, 0, 0, 0.6);
+  background: #000;
   border: 1px solid var(--color-border);
   color: var(--color-text);
   font-family: var(--font-mono);
   font-size: 1rem;
-  padding: 1rem;
-  transition: all 0.3s ease;
-  position: relative;
+  padding: 0.75rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
-.authInput::placeholder {
-  color: var(--color-text-muted);
-  opacity: 0.5;
-}
-
 .authInput:focus {
   outline: none;
-  border-color: var(--color-cyan);
-  box-shadow: 
-    0 0 15px var(--color-cyan-glow),
-    0 0 30px var(--color-cyan-glow),
-    inset 0 0 20px rgba(20, 241, 241, 0.1);
-  background: rgba(30, 37, 61, 0.9);
-  transform: translateY(-1px);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
 }
 
-.authInput:focus + .inputLabel {
-  color: var(--color-primary);
-}
-
-/* --- Extra Fields Container --- */
+/* --- New Fields Container --- */
 .extraFields {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   border-top: 1px dashed var(--color-border);
-  padding-top: 2rem;
-  margin-top: 1rem;
+  padding-top: 1.5rem;
 }
 
-/* --- Enhanced Button --- */
+/* --- Button --- */
 .authButton {
   font-family: var(--font-mono);
   text-decoration: none;
   font-weight: 700;
   cursor: pointer;
-  display: block;
-  border: 2px solid var(--color-primary);
-  background: linear-gradient(
-    135deg,
-    transparent 0%,
-    rgba(0, 255, 136, 0.1) 100%
-  );
+  display: inline-block;
+  border: 1px solid var(--color-primary);
+  background-color: transparent;
   color: var(--color-primary);
   font-size: 1rem;
-  padding: 1.25rem;
+  padding: 1rem;
   transition: all 0.3s ease;
   margin-top: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  position: relative;
-  overflow: hidden;
 }
-
-.authButton::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(0, 255, 136, 0.2);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.authButton:hover::before {
-  width: 400px;
-  height: 400px;
-}
-
 .authButton:hover {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: #000;
-  box-shadow: 
-    0 0 30px var(--color-primary-glow),
-    0 0 50px var(--color-primary-glow),
-    inset 0 0 30px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
 }
-
 .authButton:disabled {
-  color: var(--color-text-muted);
+  color: var(--color-text-dark);
   border-color: var(--color-border);
   background: transparent;
   cursor: not-allowed;
   box-shadow: none;
-  opacity: 0.5;
 }
 
-.authButton:disabled::before {
-  display: none;
-}
-
-/* --- Enhanced Error Message --- */
+/* --- Error Message --- */
 .errorMessage {
-  color: var(--color-red);
+  color: var(--color-error);
   font-size: 0.9rem;
   font-weight: 700;
-  padding: 1rem;
-  border: 2px solid var(--color-red);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 51, 102, 0.1) 0%,
-    rgba(255, 51, 102, 0.05) 100%
-  );
+  padding: 0.75rem;
+  border: 1px solid var(--color-error);
+  background-color: rgba(255, 77, 77, 0.1);
   text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 
-    0 0 20px var(--color-red-glow),
-    inset 0 0 20px rgba(255, 51, 102, 0.1);
-  animation: glitch 0.5s ease-in-out;
 }
 
-/* --- Enhanced Divider --- */
+/* --- Divider --- */
 .divider {
   display: flex;
   align-items: center;
   text-align: center;
-  color: var(--color-text-muted);
-  padding: 0 2.5rem;
-  margin-top: 1.5rem;
-  position: relative;
+  color: var(--color-text-dark);
+  padding: 0 2rem;
+  margin-top: 1rem;
 }
-
 .divider::before,
 .divider::after {
   content: '';
   flex: 1;
   border-bottom: 1px solid var(--color-border);
-  box-shadow: 0 0 5px rgba(0, 255, 136, 0.2);
 }
-
 .dividerText {
-  padding: 0 1.5rem;
+  padding: 0 1rem;
   font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 500;
 }
 
-/* --- Enhanced Google Button --- */
+/* --- Google Button --- */
 .googleButtonWrapper {
-  padding: 0 2.5rem 2.5rem 2.5rem;
+  padding: 0 2rem 2rem 2rem; /* Add padding to match the form */
 }
-
 .googleButton {
   font-family: var(--font-mono);
   font-weight: 700;
   cursor: pointer;
-  display: block;
+  display: block; /* Make it full width */
   width: 100%;
-  border: 2px solid var(--color-border);
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(10, 10, 15, 0.5) 100%
-  );
-  color: var(--color-text-dim);
-  font-size: 1rem;
-  padding: 1.25rem;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  position: relative;
-  overflow: hidden;
-}
-
-.googleButton::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
-
-.googleButton:hover::before {
-  left: 100%;
-}
-
-.googleButton:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid var(--color-text-dark);
+  background-color: transparent;
   color: var(--color-text);
-  border-color: var(--color-text-dim);
-  box-shadow: 
-    0 0 20px rgba(255, 255, 255, 0.1),
-    inset 0 0 20px rgba(255, 255, 255, 0.05);
-  transform: translateY(-2px);
+  font-size: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
 }
-
+.googleButton:hover {
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  border-color: var(--color-text);
+}
 .googleButton:disabled {
-  color: var(--color-text-muted);
+  color: var(--color-text-dark);
   border-color: var(--color-border);
   background: transparent;
   cursor: not-allowed;
-  opacity: 0.5;
 }
 
-/* --- Enhanced System Status Widget --- */
+/* --- Animated System Status Widget --- */
 .systemStatusWidget {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  font-size: 0.85rem;
-  color: var(--color-text-dim);
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 0.8rem;
+  color: var(--color-text-dark);
   z-index: 100;
-  max-width: 350px;
-  padding: 1rem 1.5rem;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(10, 10, 15, 0.9) 100%
-  );
-  border: 1px solid var(--color-border);
-  backdrop-filter: blur(10px);
-  box-shadow: 
-    0 0 20px rgba(0, 255, 136, 0.2),
-    inset 0 0 20px rgba(0, 255, 136, 0.05);
-  font-family: var(--font-mono);
-  letter-spacing: 1px;
-  animation: fadeInUp 1s ease-out;
-}
-
-.systemStatusWidget::before {
-  content: '▶';
-  color: var(--color-primary);
-  margin-right: 0.5rem;
-  animation: cursor-blink 1s step-end infinite;
-}
-
-/* --- Responsive Design --- */
-@media (max-width: 768px) {
-  .authContainer {
-    padding: 1rem;
-  }
-  
-  .authPanel {
-    max-width: 100%;
-  }
-  
-  .authForm {
-    padding: 2rem 1.5rem;
-  }
-  
-  .systemStatusWidget {
-    bottom: 1rem;
-    left: 1rem;
-    right: 1rem;
-    max-width: none;
-  }
+  max-width: 300px;
 }

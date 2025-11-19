@@ -1,9 +1,9 @@
 // src/components/AuthPage.jsx
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '../supabaseClient'; // <-- IMPORT SUPABASE
+import { supabase } from '../supabaseClient'; 
 import styles from './AuthPage.module.css';
 import Typewriter from './Typewriter';
 
@@ -45,7 +45,7 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // --- NEW SUPABASE SUBMIT LOGIC ---
+  // --- SUPABASE SUBMIT LOGIC ---
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -102,28 +102,6 @@ export default function AuthPage() {
     }
   };
 
-  // --- NEW SUPABASE GOOGLE SIGN IN ---
-  const handleGoogleSignIn = async () => {
-    setError('');
-    setLoading(true);
-    try {
-      // This one line handles everything.
-      // Supabase redirects to Google, then back to our app.
-      // App.jsx will then handle the session.
-      
-      // --- THIS LINE IS NOW FIXED ---
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-      });
-      if (error) throw error;
-
-    } catch (err) {
-      setError(`// ERROR: ${err.message}`);
-      setLoading(false);
-    }
-    // No 'finally' loading(false) here, as the page will redirect.
-  };
-
   return (
     <div className={styles.authContainer}>
       <SystemStatusWidget />
@@ -134,7 +112,7 @@ export default function AuthPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className={styles.authToggle} data-active={isLogin ? 'left' : 'right'}>
+        <div className={styles.authToggle}>
           <button
             className={`${styles.toggleButton} ${isLogin ? styles.active : ''}`}
             onClick={() => setIsLogin(true)}
@@ -236,20 +214,6 @@ export default function AuthPage() {
               : (isLogin ? '[VERIFY_ID]' : '[ENROLL_OPERATIVE]')}
           </button>
         </form>
-
-        <div className={styles.divider}>
-          <span className={styles.dividerText}>OR</span>
-        </div>
-
-        <div className={styles.googleButtonWrapper}>
-          <button 
-            className={styles.googleButton} 
-            onClick={handleGoogleSignIn}
-            disabled={loading}
-          >
-            [SIGN IN WITH GOOGLE]
-          </button>
-        </div>
       </motion.div>
     </div>
   );
